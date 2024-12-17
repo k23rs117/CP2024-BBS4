@@ -1,5 +1,12 @@
 <!DOCTYPE HTML>
 <html>
+<div class="controls">
+    <button onclick="changeBackgroundColorToBlue()">背景を青にする</button>
+</div>
+<div class="controls">
+    <button onclick="changeBackgroundColorTowhite()">背景を白にする</button>
+</div>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -219,6 +226,13 @@ function createPostElement(post) {
             </div>
         </div>
     `;
+}
+// 背景を青に変更する関数
+function changeBackgroundColorToBlue() {
+    document.body.style.backgroundColor = "blue";
+}
+function changeBackgroundColorTowhite() {
+    document.body.style.backgroundColor = "white";
 }
 
 
