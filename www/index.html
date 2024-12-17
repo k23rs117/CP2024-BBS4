@@ -142,17 +142,30 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
+
 // タイムスタンプのフォーマット
 function formatTimestamp(timestamp) {
+    const now = new Date();
     const date = new Date(timestamp);
-    return date.toLocaleString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) {
+        return `${diffInSeconds}秒前`;
+    } else if (diffInSeconds < 3600) {
+        const minutes = Math.floor(diffInSeconds / 60);
+        return `${minutes}分前`;
+    } else if (diffInSeconds < 86400) {
+        const hours = Math.floor(diffInSeconds / 3600);
+        return `${hours}時間前`;
+    } else {
+        const days = Math.floor(diffInSeconds / 86400);
+        return `${days}日前`;
+    }
 }
+
+   
+
 
 // 投稿の編集権限チェック
 function canEditPost(post) {
@@ -180,7 +193,6 @@ function createPostElement(post) {
         <div class="post" id="post-${post.id}">
             <div class="post-header">
                 <span class="post-author">${escapeHtml(post.author)}</span>
-                <!-- 編集権限があれば、編集・削除機能を表示 -->
                 ${actions}
             </div>
             <div class="post-content">${escapeHtml(post.content)}</div>
@@ -208,6 +220,7 @@ function createPostElement(post) {
         </div>
     `;
 }
+
 
 // 投稿の表示処理
 function renderPosts(posts) {
